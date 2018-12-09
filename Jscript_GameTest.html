@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<canvas id="canvas" width="1000" height="500" style="border: 2px solid black; margin: 10px auto;"></canvas>
+<script type="text/javascript">
+
+var canvas = document.getElementById('canvas');
+var draw=canvas.getContext('2d');
+var tileSize=canvas.height/10;
+var mapLength=canvas.width/tileSize;
+var tilex=0;
+var tiley=0;
+var charx=100;
+var chary=340;
+var tile1= new Image();
+var tile2=new Image();
+
+  tile1.onload=function(){;}
+  tile1.src='http://www.reinerstilesets.de/thumbs_t/ts_120.jpg';
+tile2.onload=function(){;}
+  tile2.src='http://www.reinerstilesets.de/thumbs_t/ts_121.jpg';
+
+
+
+
+
+  var mapArray = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+];
+
+
+
+
+
+
+ function drawMap() {
+
+for (var y=0; y<mapLength; y++){
+   for (var x=0; x<tileSize; x++){
+
+
+  tilex=x*tileSize;
+   tiley=y*tileSize;
+
+
+  if (parseInt(mapArray[y][x]) == 0) {
+
+          draw.drawImage(tile1, tilex, tiley, tileSize, tileSize);
+
+
+                                      }
+
+  if (parseInt(mapArray[y][x]) == 1) {
+             draw.drawImage(tile2, tilex, tiley, tileSize, tileSize);
+            }
+
+}}
+ }
+
+
+  function drawChar(){
+  draw.beginPath();
+draw.arc(charx,chary,tileSize/2,0,2*Math.PI);
+draw.fillStyle="yellow";
+    draw.fill();
+    draw.beginPath();
+draw.arc(charx,chary,tileSize/2,0,2*Math.PI);
+draw.stroke();
+}
+
+
+function nextFrame(){
+    charx=charx+tileSize;
+  draw.clearRect(0, 0, canvas.width, canvas.height);
+  drawMap();
+  drawChar();
+}
+
+setInterval(nextFrame,100);
+
+
+
+
+</script>
+</body>
+</html>
