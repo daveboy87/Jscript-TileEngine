@@ -14,16 +14,18 @@ var tileSize=canvas.height/10;
 var mapLength=canvas.width/tileSize;
 var tilex=0;
 var tiley=0;
-var charx=100;
-var chary=340;
+var charx=tileSize*2;
+var chary=tileSize*9;
 var tile1= new Image();
 var tile2=new Image();
+var charImg=new Image();
 
   tile1.onload=function(){;}
   tile1.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/tile_sky.jpg';
-tile2.onload=function(){;}
+  tile2.onload=function(){;}
   tile2.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/tile_ground.jpg';
-
+  charImg.onload=function(){;}
+  charImg.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/player.jpg';
 
 
 
@@ -72,13 +74,7 @@ for (var y=0; y<mapLength; y++){
 
 
   function drawChar(){
-  draw.beginPath();
-draw.arc(charx,chary,tileSize/2,0,2*Math.PI);
-draw.fillStyle="yellow";
-    draw.fill();
-    draw.beginPath();
-draw.arc(charx,chary,tileSize/2,0,2*Math.PI);
-draw.stroke();
+ draw.drawImage(charImg, charx, chary, tileSize, tileSize);
 }
 
 
