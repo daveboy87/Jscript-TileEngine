@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-
-</head>
-<body>
-
-<canvas id="canvas" width="1000" height="500" style="border: 2px solid black; margin: 10px auto;"></canvas>
-<script type="text/javascript">
-
-var canvas = document.getElementById('canvas');
+    <head>
+    </head>
+    <body>
+        <canvas height="500" id="canvas" style="border: 2px solid black; margin: 10px auto;" width="1000">
+        </canvas>
+        <script type="text/javascript">
+            var canvas = document.getElementById('canvas');
 var draw=canvas.getContext('2d');
-var tileSize=canvas.height/10;
-var mapLength=canvas.width/tileSize;
+
+var count=0;
+var mapHeight=10;
+var mapWidth=20;
+
+var tileSize=canvas.height/mapHeight;
+
 var tilex=0;
 var tiley=0;
-var charx=tileSize*2;
-var chary=tileSize*9;
+var charx=100;
+var chary=50;
+var falling=1;
+
 var tile1= new Image();
-var tile2=new Image();
-var charImg=new Image();
+var tile2= new Image();
+var charImg= new Image();
 
-  tile1.onload=function(){;}
+var numTiles=mapHeight*mapWidth;
+
   tile1.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/tile_sky.jpg';
-  tile2.onload=function(){;}
+
   tile2.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/tile_ground.jpg';
-  charImg.onload=function(){;}
-  charImg.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/player.jpg';
 
-
-
-
+  charImg.src='https://raw.githubusercontent.com/daveboy87/Jscript-TileEngine/master/player.jpeg';
+  var tiles= new Array();
   var mapArray = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -43,53 +46,66 @@ var charImg=new Image();
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1]
 ];
 
+for (var y=0; y<mapHeight; y++){  
+  for (var x=0; x<mapWidth; x++){
 
+       tilex=x*tileSize;
+       tiley=y*tileSize;
+         
+        var z=mapArray[y][x];
 
+          tiles.push(new setTiles(tilex,tiley,z));
+                 }}
 
-
-
- function drawMap() {
-
-for (var y=0; y<mapLength; y++){
-   for (var x=0; x<tileSize; x++){
-
-
-  tilex=x*tileSize;
-   tiley=y*tileSize;
-
-
-  if (parseInt(mapArray[y][x]) == 0) {
-
-          draw.drawImage(tile1, tilex, tiley, tileSize, tileSize);
-
-
-                                      }
-
-  if (parseInt(mapArray[y][x]) == 1) {
-             draw.drawImage(tile2, tilex, tiley, tileSize, tileSize);
-            }
-
-}}
- }
-
-
-  function drawChar(){
- draw.drawImage(charImg, charx, chary, tileSize, tileSize);
+function setTiles(x,y,z){
+this.x=x;
+this.y=y;
+this.z=z;
 }
 
+function drawMap() {
+   for (var y=0; y<mapHeight; y++){  
+    for (var x=0; x<mapWidth; x++){
+
+       tilex=x*tileSize;
+       tiley=y*tileSize;
+      
+  if (mapArray[y][x] == 0) {
+          draw.drawImage(tile1, tilex, tiley, tileSize, tileSize);   }
+
+  if (mapArray[y][x] == 1) {
+          draw.drawImage(tile2, tilex, tiley, tileSize, tileSize);   }
+
+            } }
+}
+
+
+function drawChar(){   
+          
+draw.drawImage(charImg, charx, chary, tileSize, tileSize);
+}
+
+function moveChar(){
+
+for (i=0; i<tiles.length;i++){
+
+if(tiles[i].x == charx && tiles[i].y == chary+50 && tiles[i].z == 0){
+chary=chary+50;}
+console.log(charx, chary, tiles[i].x, tiles[i].y, tiles[i].z);
+     }
+}
 
 function nextFrame(){
-    charx=charx+tileSize;
-  draw.clearRect(0, 0, canvas.width, canvas.height);
-  drawMap();
-  drawChar();
+draw.clearRect(0, 0, canvas.width, canvas.height);
+moveChar();
+drawMap();
+drawChar();
+
+
 }
 
-setInterval(nextFrame,100);
+setInterval(nextFrame, 1000);
 
-
-
-
-</script>
-</body>
+        </script>
+    </body>
 </html>
